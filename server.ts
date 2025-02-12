@@ -7,7 +7,12 @@ export function handler(req: Request, connInfo: Deno.ServeHandlerInfo) {
   const clientIP = forwardedIP || cfIP || realIP || hostname || "Unknown";
 
   return new Response(JSON.stringify({ ip: clientIP }), {
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*", // Allows all origins (no CORS block)
+      "Access-Control-Allow-Methods": "GET, OPTIONS", // Supports GET and preflight OPTIONS
+      "Access-Control-Allow-Headers": "*", // Allows any headers
+    },
   });
 }
 
